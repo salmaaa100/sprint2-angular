@@ -1,0 +1,30 @@
+<div class="card shadow mb-4">
+  <div class="card-body">
+    <h5 class="mb-3">{{ ajout ? 'Ajouter un genre' : 'Modifier le genre' }}</h5>
+    <form #formGenre="ngForm" (ngSubmit)="saveGenre()">
+      <div class="mb-3">
+        <label class="form-label">ID</label>
+        <input type="number" class="form-control" name="idGenre" [(ngModel)]="genre.idGenre" readonly>
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label">Nom du genre</label>
+        <input type="text" class="form-control" name="nomGenre" [(ngModel)]="genre.nomGenre"
+          required minlength="3" #nomGenre="ngModel">
+        @if (nomGenre.invalid && (nomGenre.dirty || nomGenre.touched)) {
+          <div class="text-danger">
+            @if (nomGenre.errors?.['required']) { Le nom du genre est obligatoire. }
+            @if (nomGenre.errors?.['minlength']) { Le nom doit contenir au moins 3 caractères. }
+          </div>
+        }
+      </div>
+
+      <button type="submit" class="btn btn-primary me-2" [disabled]="formGenre.invalid">
+        {{ ajout ? 'Ajouter' : 'Modifier' }}
+      </button>
+      @if (!ajout) {
+        <button type="button" class="btn btn-secondary" (click)="onAnnuler()">Annuler</button>
+      }
+    </form>
+  </div>
+</div>

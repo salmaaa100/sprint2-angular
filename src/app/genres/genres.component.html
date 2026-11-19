@@ -1,0 +1,42 @@
+<div class="container mt-4">
+  <h3 class="mb-3">Liste des genres</h3>
+
+  @if (authService.isAdmin()) {
+    <app-update-genre
+      [genre]="updatedGenre"
+      [ajout]="ajout"
+      (genreUpdated)="genreUpdated($event)"
+      (annuler)="nouveauGenre()">
+    </app-update-genre>
+  }
+
+  <table class="table table-striped table-bordered">
+    <thead class="table-dark">
+      <tr>
+        <th>ID</th>
+        <th>Nom du genre</th>
+        @if (authService.isAdmin()) {
+          <th>Actions</th>
+        }
+      </tr>
+    </thead>
+    <tbody>
+      @for (g of genres; track g.idGenre) {
+        <tr>
+          <td>{{ g.idGenre }}</td>
+          <td>{{ g.nomGenre }}</td>
+          @if (authService.isAdmin()) {
+            <td>
+              <button class="btn btn-success btn-sm me-2" (click)="chargerGenre(g)">Modifier</button>
+              <button class="btn btn-danger btn-sm" (click)="supprimerGenre(g)">Supprimer</button>
+            </td>
+          }
+        </tr>
+      } @empty {
+        <tr>
+          <td [attr.colspan]="authService.isAdmin() ? 3 : 2" class="text-center">Aucun genre trouvé</td>
+        </tr>
+      }
+    </tbody>
+  </table>
+</div>

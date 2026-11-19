@@ -1,0 +1,46 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <div class="container">
+    <a class="navbar-brand" routerLink="/musicians">Gestion des musiciens</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContenu"
+      aria-controls="navbarContenu" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarContenu">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="menuMusicians" role="button"
+            data-bs-toggle="dropdown" aria-expanded="false">Musiciens</a>
+          <ul class="dropdown-menu" aria-labelledby="menuMusicians">
+            <li><a class="dropdown-item" routerLink="/musicians">Liste</a></li>
+            @if (authService.isAdmin()) {
+              <li><a class="dropdown-item" routerLink="/add-musician">Ajouter</a></li>
+            }
+            <li><a class="dropdown-item" routerLink="/genres">Genres</a></li>
+            <li><a class="dropdown-item" routerLink="/rechercheParGenre">Recherche par genre</a></li>
+            <li><a class="dropdown-item" routerLink="/rechercheParNom">Recherche par nom</a></li>
+          </ul>
+        </li>
+      </ul>
+      <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="menuUser" role="button"
+            data-bs-toggle="dropdown" aria-expanded="false">
+            @if (authService.isloggedIn) {
+              [{{ authService.loggedUser }}]
+            } @else {
+              Compte
+            }
+          </a>
+          <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="menuUser">
+            @if (!authService.isloggedIn) {
+              <li><a class="dropdown-item" routerLink="/login">Login</a></li>
+            } @else {
+              <li><a class="dropdown-item" role="button" (click)="onLogout()">Logout</a></li>
+            }
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+<router-outlet></router-outlet>
